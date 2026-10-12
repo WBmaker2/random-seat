@@ -19,12 +19,19 @@ export class SoundEffects {
     this.enabled = enabled;
   }
 
+  public close(): void {
+    if (this.ctx && this.ctx.state !== 'closed') {
+      this.ctx.close().catch(() => {});
+      this.ctx = null;
+    }
+  }
+
   private getAudioContext(): AudioContext | null {
     if (typeof window === 'undefined') {
       return null;
     }
 
-    if (!this.ctx) {
+    if (!this.ctx || this.ctx.state === 'closed') {
       const AudioCtx =
         window.AudioContext ||
         (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
@@ -167,3 +174,5 @@ export class SoundEffects {
     }
   }
 }
+
+export const soundEffects = new SoundEffects();

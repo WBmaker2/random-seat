@@ -18,6 +18,7 @@ export function fireConfetti(): void {
       spread: 60,
       origin: { x: 0, y: 0.7 },
       colors: ['#4f46e5', '#06b6d4', '#10b981', '#f59e0b', '#ec4899'],
+      disableForReducedMotion: true,
     });
 
     // Right side cannon
@@ -27,6 +28,7 @@ export function fireConfetti(): void {
       spread: 60,
       origin: { x: 1, y: 0.7 },
       colors: ['#4f46e5', '#06b6d4', '#10b981', '#f59e0b', '#ec4899'],
+      disableForReducedMotion: true,
     });
 
     // Center starburst explosion
@@ -36,6 +38,7 @@ export function fireConfetti(): void {
       origin: { x: 0.5, y: 0.4 },
       startVelocity: 35,
       colors: ['#6366f1', '#a855f7', '#ec4899', '#f43f5e', '#fbbf24'],
+      disableForReducedMotion: true,
     });
   } catch {
     // Graceful fallback if canvas is not supported in the running environment
