@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { generateSeatingPlan, shuffleArray } from './seating';
+import { generateSeatingPlan, shuffleArray, getPlaceholderGroups } from './seating';
 
 describe('seating utility', () => {
   describe('shuffleArray', () => {
@@ -82,4 +82,22 @@ describe('seating utility', () => {
       expect(smallSeats).toEqual([1, 2, 3]);
     });
   });
+
+  describe('getPlaceholderGroups', () => {
+    it('generates placeholder groups with 0 filled seats', () => {
+      const placeholders = getPlaceholderGroups(24, 6);
+      expect(placeholders).toHaveLength(6);
+      placeholders.forEach((p, idx) => {
+        expect(p.groupName).toBe(`${idx + 1}모둠`);
+        expect(p.seatNumbers).toEqual([0, 0, 0, 0]);
+      });
+    });
+
+    it('handles non-finite or invalid numbers safely', () => {
+      expect(getPlaceholderGroups(NaN, 6)).toEqual([]);
+      expect(getPlaceholderGroups(24, NaN)).toEqual([]);
+      expect(getPlaceholderGroups(0, 5)).toEqual([]);
+    });
+  });
 });
+

@@ -1,6 +1,8 @@
 import React from 'react';
-import { PodSeatGroup } from '../utils/seating';
+import { PodSeatGroup, getPlaceholderGroups } from '../utils/seating';
 import { DeskPod } from './DeskPod';
+
+export { getPlaceholderGroups };
 
 export interface ClassroomBoardProps {
   seatingPlan: PodSeatGroup[];
@@ -9,32 +11,6 @@ export interface ClassroomBoardProps {
   rollingNumbers?: Record<string, number>; // key: `${groupIndex}-${seatIdx}`
   studentCount: number;
   groupCount: number;
-}
-
-/**
- * Generates placeholder groups for the idle / pre-roll state,
- * so students and teachers can preview the classroom desk layout.
- */
-export function getPlaceholderGroups(studentCount: number, groupCount: number): PodSeatGroup[] {
-  const totalStudents = Math.floor(studentCount);
-  const totalGroups = Math.floor(groupCount);
-  if (totalStudents <= 0 || totalGroups <= 0) return [];
-  const validGroups = Math.min(totalGroups, totalStudents);
-
-  const baseCount = Math.floor(totalStudents / validGroups);
-  const remainder = totalStudents % validGroups;
-
-  const result: PodSeatGroup[] = [];
-  for (let g = 0; g < validGroups; g++) {
-    const size = g < remainder ? baseCount + 1 : baseCount;
-    result.push({
-      groupIndex: g,
-      groupName: `${g + 1}모둠`,
-      seatNumbers: Array(size).fill(0),
-    });
-  }
-
-  return result;
 }
 
 export const ClassroomBoard: React.FC<ClassroomBoardProps> = ({

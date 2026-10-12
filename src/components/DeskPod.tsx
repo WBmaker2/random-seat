@@ -37,7 +37,7 @@ export const DeskPod: React.FC<DeskPodProps> = ({
         <div className="flex items-center space-x-2">
           {/* Group badge */}
           <span
-            className={`px-2.5 py-1 rounded-lg font-bold text-sm tracking-tight shadow-xs ${theme.badgeBg} ${theme.badgeText}`}
+            className={`px-2.5 py-1 rounded-lg font-bold text-sm tracking-tight shadow-sm ${theme.badgeBg} ${theme.badgeText}`}
           >
             {group.groupName}
           </span>
