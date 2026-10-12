@@ -50,6 +50,18 @@ describe('seating utility', () => {
       expect(allSeats).toEqual(Array.from({ length: 25 }, (_, i) => i + 1));
     });
 
+    it('distributes 26 students into 6 groups fairly with multiple remainders (5, 5, 4, 4, 4, 4)', () => {
+      const plan = generateSeatingPlan(26, 6);
+      expect(plan).toHaveLength(6);
+      expect(plan[0].seatNumbers).toHaveLength(5);
+      expect(plan[1].seatNumbers).toHaveLength(5);
+      for (let i = 2; i < 6; i++) {
+        expect(plan[i].seatNumbers).toHaveLength(4);
+      }
+      const allSeats = plan.flatMap((g) => g.seatNumbers).sort((a, b) => a - b);
+      expect(allSeats).toEqual(Array.from({ length: 26 }, (_, i) => i + 1));
+    });
+
     it('handles edge cases gracefully', () => {
       // 0 or negative students / groups return empty array
       expect(generateSeatingPlan(0, 5)).toEqual([]);

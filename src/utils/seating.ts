@@ -14,14 +14,16 @@ export function shuffleArray<T>(array: T[]): T[] {
 }
 
 export function generateSeatingPlan(studentCount: number, groupCount: number): PodSeatGroup[] {
-  if (studentCount <= 0 || groupCount <= 0) return [];
-  const validGroups = Math.min(groupCount, studentCount);
+  const totalStudents = Math.floor(studentCount);
+  const totalGroups = Math.floor(groupCount);
+  if (totalStudents <= 0 || totalGroups <= 0) return [];
+  const validGroups = Math.min(totalGroups, totalStudents);
 
-  const students = Array.from({ length: studentCount }, (_, i) => i + 1);
+  const students = Array.from({ length: totalStudents }, (_, i) => i + 1);
   const shuffled = shuffleArray(students);
 
-  const baseCount = Math.floor(studentCount / validGroups);
-  const remainder = studentCount % validGroups;
+  const baseCount = Math.floor(totalStudents / validGroups);
+  const remainder = totalStudents % validGroups;
 
   const result: PodSeatGroup[] = [];
   let currentIndex = 0;
