@@ -105,13 +105,14 @@ export const SeatCard: React.FC<SeatCardProps> = ({
   const theme = GROUP_COLORS[Math.abs(groupColorIndex) % GROUP_COLORS.length];
 
   // Determine current display state
-  const state = isLocked ? 'locked' : isRolling ? 'rolling' : 'idle';
+  const state = isLocked && seatNumber !== null ? 'locked' : isRolling ? 'rolling' : 'idle';
+  const rollingNum = displayNumber ?? seatNumber;
 
-  let ariaLabel = deskIndex ? `${deskIndex}번 책상` : '책상';
+  let ariaLabel = deskIndex !== undefined ? `${deskIndex}번 책상` : '책상';
   if (state === 'locked' && seatNumber !== null) {
     ariaLabel += `: 학생 ${seatNumber}번`;
-  } else if (state === 'rolling' && displayNumber !== undefined) {
-    ariaLabel += `: 추첨 중 (${displayNumber}번)`;
+  } else if (state === 'rolling' && rollingNum !== null && rollingNum !== undefined) {
+    ariaLabel += `: 추첨 중 (${rollingNum}번)`;
   } else {
     ariaLabel += ': 빈 자리';
   }
@@ -124,7 +125,7 @@ export const SeatCard: React.FC<SeatCardProps> = ({
       aria-label={ariaLabel}
       className={`relative flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all duration-300 select-none min-h-[90px] w-full ${
         state === 'locked'
-          ? `${theme.borderLocked} ${theme.bgLocked} shadow-md scale-100`
+          ? `${theme.borderLocked} ${theme.bgLocked} ${theme.glow} shadow-md scale-100`
           : state === 'rolling'
           ? 'border-amber-400 bg-amber-50/90 shadow-lg ring-2 ring-amber-300 ring-offset-1 animate-pulse scale-[1.02]'
           : 'border-dashed border-slate-300 bg-white/70 hover:border-slate-400 shadow-sm'
@@ -141,7 +142,7 @@ export const SeatCard: React.FC<SeatCardProps> = ({
       {state === 'locked' && seatNumber !== null ? (
         <div className="flex flex-col items-center justify-center space-y-0.5 mt-2">
           <div
-            className={`px-3 py-1 rounded-full ${theme.badgeBg} ${theme.badgeText} font-black text-xl tracking-tight shadow-sm transition-transform duration-200 animate-in fade-in zoom-in-95`}
+            className={`px-3 py-1 rounded-full ${theme.badgeBg} ${theme.badgeText} font-black text-xl tracking-tight shadow-sm transition-transform duration-200 animate-pop-in`}
           >
             {seatNumber}번
           </div>
@@ -150,7 +151,7 @@ export const SeatCard: React.FC<SeatCardProps> = ({
       ) : state === 'rolling' ? (
         <div className="flex flex-col items-center justify-center mt-2">
           <div className="px-3 py-1 rounded-full bg-amber-500 text-white font-black text-xl tracking-tight shadow-md animate-bounce">
-            {displayNumber !== undefined ? `${displayNumber}번` : '...'}
+            {rollingNum !== null && rollingNum !== undefined ? `${rollingNum}번` : '...'}
           </div>
           <span className="text-[11px] font-semibold text-amber-600 animate-pulse mt-0.5">
             돌아가는 중...
