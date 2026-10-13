@@ -1,5 +1,7 @@
 # 🏫 우리 반 자리 뽑기 (Classroom Random Seat Picker)
 
+> 🔗 **실제 서비스 바로가기 (Live Demo)**: **[https://wbmaker2.github.io/random-seat/](https://wbmaker2.github.io/random-seat/)**
+
 선생님과 학생들이 함께 사용하는 **초등학교·중학교·고등학교 교실용 모둠 자리 무작위 뽑기 웹 애플리케이션**입니다.  
 학생 수와 모둠 수를 입력하면 1번부터 마지막 번호까지의 학생 번호를 중복 없이 무작위로 섞어, 실제 교실 칠판/교탁 기준 모둠별 마주보는 자리 배치표를 시각화합니다.
 
